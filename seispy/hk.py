@@ -177,7 +177,7 @@ def hksta(hpara:HKPara, isplot=False, isdisplay=False):
     with open(hpara.hklist, 'a') as f:
         f.write('{}\t{:.3f}\t{:.3f}\t{:.1f}\t{:.2f}\t{:.2f}\t{:.3f}\n'.format(stadata.staname, stadata.stla, stadata.stlo,
                                                                               besth, maxhsig, bestk, maxksig))
-    title = '{}\nMoho depth = ${:.1f}\pm{:.2f}$ km\n$V_P/V_S$ = ${:.2f}\pm{:.3f}$'.format(stadata.staname, besth,
+    title = '{}\nMoho depth = ${:.1f}{\pm}{:.2f}$ km\n$V_P/V_S$ = ${:.2f}{\pm}{:.3f}$'.format(stadata.staname, besth,
                                                                                      maxhsig, bestk, maxksig)
     if isdisplay:
         print_result(besth, bestk, maxhsig, maxksig, print_comment=True)
