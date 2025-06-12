@@ -433,7 +433,7 @@ def get_stations():
             
 
 def pickrf_viewer():
-    parser = argparse.ArgumentParser(description="User interface for picking PRFs (tkinter version)")
+    parser = argparse.ArgumentParser(description="User interface for picking PRFs")
     parser.add_argument('rf_path', type=str, help='Path to PRFs')
     parser.add_argument('-a', dest='order', default='baz', metavar='baz|dis|date',
                         help="Arrangement of RFs, defaults to 'baz'")
