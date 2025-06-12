@@ -40,7 +40,7 @@ class TKPickUI:
 
         self.root.title("PickRF")
         # Optionally set window icon if you have a .ico file
-        icon_path = join(dirname(__file__), 'data', 'seispy.ico')
+        icon_path = join(dirname(dirname(__file__)), 'data', 'seispy.png')
         if os.path.exists(icon_path):
             self.root.iconphoto(False, tk.PhotoImage(file=icon_path))
 
@@ -213,16 +213,16 @@ class TKPickUI:
         self.root.mainloop()
 
 
-def main():
-    parser = argparse.ArgumentParser(description="User interface for picking PRFs (tkinter version)")
-    parser.add_argument('rf_path', type=str, help='Path to PRFs')
-    parser.add_argument('-a', dest='order', default='baz', metavar='baz|dis|date',
-                        help="Arrangement of RFs, defaults to 'baz'")
-    parser.add_argument('-r', dest='only_r', action='store_true', 
-                        help="Only plot R component")
-    parser.add_argument('-x', dest='xlim', default=None, type=float,
-                        help="Set x-axis max limit; defaults to 30s for RT, 85s for R.")
-    args = parser.parse_args()
+def pickviewer_tk(args):
+    # parser = argparse.ArgumentParser(description="User interface for picking PRFs (tkinter version)")
+    # parser.add_argument('rf_path', type=str, help='Path to PRFs')
+    # parser.add_argument('-a', dest='order', default='baz', metavar='baz|dis|date',
+    #                     help="Arrangement of RFs, defaults to 'baz'")
+    # parser.add_argument('-r', dest='only_r', action='store_true', 
+    #                     help="Only plot R component")
+    # parser.add_argument('-x', dest='xlim', default=None, type=float,
+    #                     help="Set x-axis max limit; defaults to 30s for RT, 85s for R.")
+    # args = parser.parse_args()
 
     rfpath = args.rf_path
     if not exists(rfpath):
@@ -244,6 +244,3 @@ def main():
     app = TKPickUI(rfpath, only_r=only_r, xlim=[-2, xlim], order=args.order)
     app.start()
     sys.exit(0)
-
-if __name__ == '__main__':
-    main()

@@ -67,7 +67,7 @@ class MatplotlibWidget(QMainWindow):
         self._set_geom_center()
         self._define_global_shortcuts()
         self.setWindowTitle('PickRF')
-        self.setWindowIcon(QIcon(join(dirname(__file__), 'data', 'seispy.png')))
+        self.setWindowIcon(QIcon(join(dirname(dirname(__file__)), 'data', 'seispy.png')))
 
     def on_click(self, event):
         self.mpl.rffig.onclick(event)
@@ -168,17 +168,17 @@ class MatplotlibWidget(QMainWindow):
         self.layout.addLayout(ctrl_layout)
 
 
-def main():
-    parser = argparse.ArgumentParser(description="User interface for picking PRFs")
-    parser.add_argument('rf_path', type=str, help='Path to PRFs')
-    parser.add_argument('-a', help='Arrangement of RFs, defaults to \'baz\'', dest='order',
-                        default='baz', type=str, metavar='baz|dis|date')
-    parser.add_argument('-x', help="Set x limits of the current axes, defaults to 30s for RT, 85s for R.",
-                        dest='xlim', default=None, type=float, metavar='xmax')
-    Warning.warn('To streamline the seispy we recommend using the seispy.pickrf.pickui_tk.py instead of this one.'
-                  'The Pyside6 has been removed from the seispy dependencies.'
-                  'The Qt supporting will be deprecated after version 1.4.0')
-    arg = parser.parse_args()
+def pickviewer_qt(arg):
+    # parser = argparse.ArgumentParser(description="User interface for picking PRFs")
+    # parser.add_argument('rf_path', type=str, help='Path to PRFs')
+    # parser.add_argument('-a', help='Arrangement of RFs, defaults to \'baz\'', dest='order',
+    #                     default='baz', type=str, metavar='baz|dis|date')
+    # parser.add_argument('-x', help="Set x limits of the current axes, defaults to 30s for RT, 85s for R.",
+    #                     dest='xlim', default=None, type=float, metavar='xmax')
+    # Warning.warn('To streamline the seispy we recommend using the seispy.pickrf.pickui_tk.py instead of this one.'
+    #               'The Pyside6 has been removed from the seispy dependencies.'
+    #               'The Qt supporting will be deprecated after version 1.4.0')
+    # arg = parser.parse_args()
     rfpath = arg.rf_path
     if not exists(rfpath):
         raise FileNotFoundError('No such directory of {}'.format(rfpath))
@@ -195,6 +195,3 @@ def main():
     ui.show()
     sys.exit(app.exec())
 
-
-if __name__ == '__main__':
-    main()
