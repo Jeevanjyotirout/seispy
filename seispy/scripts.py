@@ -437,7 +437,7 @@ def pickrf_viewer():
     parser.add_argument('rf_path', type=str, help='Path to PRFs')
     parser.add_argument('-a', dest='order', default='baz', metavar='baz|dis|date',
                         help="Arrangement of RFs, defaults to 'baz'")
-    parser.add_argument('-e', help='Backend of UI engine, defaults to \'tk\'', metavar='tk|qt', default='tk')
+    parser.add_argument('-e', help='Backend of UI engine, defaults to \'qt\'', metavar='tk|qt', default='qt')
     parser.add_argument('-r', dest='only_r', action='store_true', 
                         help="Only plot R component")
     parser.add_argument('-x', dest='xlim', default=None, type=float,

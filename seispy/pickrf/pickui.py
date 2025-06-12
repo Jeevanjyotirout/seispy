@@ -139,12 +139,16 @@ class MatplotlibWidget(QMainWindow):
 
     def add_btn(self):
         pre_btn = QPushButton("Back (z)")
+        pre_btn.setIcon(QIcon(join(dirname(dirname(__file__)), 'data', 'back.png')))
         pre_btn.clicked.connect(self.previous_connect)
         next_btn = QPushButton("Next (c)")
+        next_btn.setIcon(QIcon(join(dirname(dirname(__file__)), 'data', 'next.png')))
         next_btn.clicked.connect(self.next_connect)
         plot_btn = QPushButton("Preview (Space)")
+        plot_btn.setIcon(QIcon(join(dirname(dirname(__file__)), 'data', 'preview.png')))
         plot_btn.clicked.connect(self.plot_ui)
         finish_btn = QPushButton("Finish")
+        finish_btn.setIcon(QIcon(join(dirname(dirname(__file__)), 'data', 'finish.png')))
         finish_btn.clicked.connect(self.finish)
         btnbox = QHBoxLayout()
         btnbox.addStretch(1)
@@ -154,8 +158,10 @@ class MatplotlibWidget(QMainWindow):
         btnbox.addWidget(finish_btn)
 
         enlarge_btn = QPushButton("Amp enlarge")
+        enlarge_btn.setIcon(QIcon(join(dirname(dirname(__file__)), 'data', 'zoom_in.png')))
         enlarge_btn.clicked.connect(self.enlarge)
         areduce_btn = QPushButton("Amp reduce")
+        areduce_btn.setIcon(QIcon(join(dirname(dirname(__file__)), 'data', 'zoom_out.png')))
         areduce_btn.clicked.connect(self.reduce)
         pathbox = QHBoxLayout()
         pathbox.addWidget(enlarge_btn)
