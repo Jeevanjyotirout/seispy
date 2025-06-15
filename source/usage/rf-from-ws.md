@@ -1,6 +1,6 @@
 # Fetch seismic data from web-service and calculate RF automatically
 
-After Seispy v1.3.0, users can calculate RFs with specified network and station which can be fetched from [FDSN web service](https://www.fdsn.org/webservices/). This section shows a example to calculate PRFs with fetching station and event information from web service.
+Users can calculate RFs with specified network and station which can be fetched from [FDSN web service](https://www.fdsn.org/webservices/). This section shows a example to calculate PRFs with fetching station and event information from web service.
 
 ```{note}
 This notebook can be downloaded as **{download}`rf-from-ws.ipynb <../_static/rf-from-ws.ipynb>`**
@@ -27,6 +27,34 @@ query = Query(server='IRIS') ## Server is the URL of FDSN web service or a short
 query.get_stations(network='IU', station='U*', level='channel')
 #print(query.stations)
 ```
+
+
+## Automatically calculate RFs from web-service
+Users can automatically fetch and calculate RFs with specified network station and other information which can be fetched from [FDSN web service](https://www.fdsn.org/webservices/). The parameters for fetching data are set in the `fetch` section of [parameter file](../notes/rf_cfg). The parallel fetching is supported.
+``` toml
+[fetch]
+# Use remote data or not 
+use_remote_data = True
+
+# Data server, defaults to IRIS
+data_server = IRIS
+
+# Station information
+network = CB
+station = NJ2
+location =
+channel = BH?
+
+# Number of processors for parallel fetching
+n_proc = 8
+
+# Username and password for data server
+data_server_user =
+data_server_password =
+```
+
+The `prf rf.cfg` command will automatically fetch the seismic data and calculate the RFs with the parameters set in the `fetch` section. The RFs will be saved in the directory specified by `rfpath` in the parameter file. 
+
 
 ## Fetch data and calculate RF with different gauss factors
     

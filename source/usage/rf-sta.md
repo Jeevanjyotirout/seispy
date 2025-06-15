@@ -161,11 +161,15 @@ pjt.search_eq(local=True)
 ## Associate SAC files with events
 
 
-This is a important step, which allow to link SAC files and earthquakes in catalog. The `pjt.para.dateformat`, that is a format string as in [time.strftime](https://docs.python.org/3/library/time.html#time.strftime), including `datetime` information will allow to match events in catalog. For example, assuming the filename is `2018.229.15.35.02.1.sac`. the `pjt.para.dateformat` should be `%Y.%j.%H.%M.%S`.
+This is a important step, which allow to link SAC files with teleseismic events in catalog. The `pjt.para.dateformat`, that is a format string as in [time.strftime](https://docs.python.org/3/library/time.html#time.strftime), including `datetime` information as a **reference time** for event association. For example, assuming the filename is `2018.229.15.35.02.1.sac`. the `pjt.para.dateformat` should be `%Y.%j.%H.%M.%S`.
 
-A reference sac file will read to Associate with events. Thus, file-search-string will help to find real SAC files in data path. In this program file-search-string composed of `pjt.para.ref_comp` and `pjt.para.suffix`. The presence of `*pjt.para.ref_comp*pjt.para.suffix`, such as `*.1.*sac` in this example, for SAC files will be found.
+A reference sac file will read to Associate with events. Thus, file-search-string will help to find real SAC files in data path. The file-search-string composed of `pjt.para.ref_comp` and `pjt.para.suffix`. The presence of `*pjt.para.ref_comp*pjt.para.suffix`, such as `*.1.*sac` in this example.
 
-the `pjt.para.offset` and `pjt.para.tolerance` are used to match the origin time from catalog. The definition are the same as those in [SplitRFLab](https://git.nju.edu.cn/xumi1993/SplitRFLab).
+The `pjt.para.offset` and `pjt.para.tolerance` are used to match the origin time from catalog. The origin time in the catalog $t_o$ should be in the range of 
+
+$$
+[t_o + \text{offset} - \text{tolerance}, t_o + \text{offset} + \text{tolerance}].
+$$
 
 ```{note}
 - The `offset` is the time duration between the event time and the starting time of your seismograms. Ideally, this offset should be identical to the “request start time” defined in the previous window but the data management center may have sent you data beginning later than requested. The offset value represents this difference.

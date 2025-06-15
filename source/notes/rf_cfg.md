@@ -41,6 +41,13 @@ station = NJ2
 location =
 channel = BH?
 
+# Number of processors for parallel fetching
+n_proc = 8
+
+# Username and password for data server
+data_server_user =
+data_server_password =
+
 [match_eq]
 # Date format in SAC filenames
 dateformat = %Y.%j.%H%M%S
