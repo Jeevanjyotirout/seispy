@@ -273,12 +273,16 @@ def deconwater(uin, win, dt, tshift=10., wlevel=0.05, f0=2.0, normalize=False, p
     return rft, rms
 
 
-def deconvolute(uin, win, dt, method='iter', **kwargs):
-    """ Deconvolute receiver function from waveforms.
+def deconvolute(**kwargs):
+    raise ModuleNotFoundError("deconvolute is deprecated, use deconvolve instead.")
+
+
+def deconvolve(uin, win, dt, method='iter', **kwargs):
+    """ Deconvolve receiver function from waveforms.
     :param uin: R or Q component for the response function
-    :type uin: np.ndarray
+    :type uin: ``np.ndarray``
     :param win: Z or L component for the source function
-    :type win: np.ndarray
+    :type win: ``np.ndarray``
     :param dt: sample interval in second
     :type dt: float
     :param method: Method for deconvolution, defaults to 'iter'
@@ -304,16 +308,24 @@ class RFTrace(obspy.Trace):
         super().__init__(data=data, header=header)
 
     @classmethod
-    def deconvolute(cls, utr, wtr, method='iter', **kwargs):
+    def deconvolute(cls):
+        raise ModuleNotFoundError("deconvolute is deprecated, use deconvolve instead. ")
+
+    @classmethod
+    def deconvolve(cls, utr, wtr, method='iter', tshift=10, f0=2.0, **kwargs):
         """
-        Deconvolute receiver function from waveforms.
+        Deconvolve to extract receiver function from waveforms.
 
         :param utr: R or Q component for the response function
-        :type utr: obspy.Trace
+        :type utr: ``obspy.Trace``
         :param wtr: Z or L component for the source function
-        :type wtr: obspy.Trace
+        :type wtr: ``obspy.Trace``
         :param method: Method for deconvolution, defaults to 'iter'
         :type method: str, optional
+        :param tshift: Time shift before P arrival, defaults to 10.
+        :type tshift: float, optional
+        :param f0: Gaussian factor, defaults to 2.0
+        :type f0: float, optional
         :param kwargs: Parameters for deconvolution
         :type kwargs: dict
 
@@ -324,14 +336,17 @@ class RFTrace(obspy.Trace):
         for key, value in kwargs.items():
             header[key] = value
         if method.lower() == 'iter':
-            rf, rms, it = deconit(utr.data, wtr.data, utr.stats.delta, **kwargs)
+            rf, rms, it = deconit(utr.data, wtr.data, utr.stats.delta, tshift=tshift, f0=f0, **kwargs)
             header['rms'] = rms
             header['iter'] = it
         elif method.lower() == 'water':
-            rf, rms = deconwater(utr.data, wtr.data, utr.stats.delta, **kwargs)
+            rf, rms = deconwater(utr.data, wtr.data, utr.stats.delta, tshift=tshift, f0=f0, **kwargs)
             header['rms'] = rms
             header['iter'] = np.nan
         else:
             raise ValueError('method must be \'iter\' or \'water\'')
-        return cls(rf, header)
+        rftr = cls(rf, header)
+        rftr.stats.sac.b = tshift
+        rftr.stats.sac.user0 = f0
+        return rftr
         
