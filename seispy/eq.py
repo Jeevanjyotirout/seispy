@@ -616,12 +616,9 @@ class EQ(object):
             ValueError('No such gauss factor of {} in calculated RFs'.format(gauss))
         
         # All points are NaN
-        if np.isnan(trrf.data).all():
+        if np.isnan(trrf.data).all() or np.isinf(trrf.data).any():
             return False
-        
-        if np.isinf(trrf.data).any():
-            return False
-        
+                
         # Final RMS
         if rmsgate is not None:
             if self.method == 'iter':

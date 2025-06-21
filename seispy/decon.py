@@ -307,8 +307,6 @@ class RFTrace(obspy.Trace):
     """
     def __init__(self, data=..., header=None):
         super().__init__(data=data, header=header)
-        self.tshift = 10.0
-        self.f0 = 2.0
 
     @classmethod
     def deconvolute(cls):
@@ -348,9 +346,9 @@ class RFTrace(obspy.Trace):
             header['iter'] = np.nan
         else:
             raise ValueError('method must be \'iter\' or \'water\'')
+        header['tshift'] = tshift
+        header['f0'] = f0
         rftr = cls(rf, header)
-        rftr.tshift = tshift
-        rftr.f0 = f0
         return rftr
 
     def write(self, filename, **kwargs):
@@ -363,8 +361,8 @@ class RFTrace(obspy.Trace):
         """
         sac = SACTrace.from_obspy_trace(self)
         sac.o = 0.0
-        sac.b = -self.tshift
-        sac.user0 = self.f0
+        sac.b = -self.stats.tshift
+        sac.user0 = self.stats.f0
         for key, value in kwargs.items():
             setattr(sac, key, value)
         sac.write(filename)
