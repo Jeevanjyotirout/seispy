@@ -367,6 +367,6 @@ class RFTrace(obspy.Trace):
         sac.user0 = self.f0
         for key, value in kwargs.items():
             setattr(sac, key, value)
-        sac.write(filename, **kwargs)
+        sac.write(filename)
 
         
