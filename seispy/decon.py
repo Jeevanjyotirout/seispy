@@ -2,6 +2,7 @@
 import numpy as np
 import obspy
 from obspy.signal.util import next_pow_2
+from obspy.io.sac import SACTrace
 from numpy.fft import fft, ifft
 # from scipy.linalg import solve_toeplitz
 
@@ -306,6 +307,8 @@ class RFTrace(obspy.Trace):
     """
     def __init__(self, data=..., header=None):
         super().__init__(data=data, header=header)
+        self.tshift = 10.0
+        self.f0 = 2.0
 
     @classmethod
     def deconvolute(cls):
@@ -346,7 +349,24 @@ class RFTrace(obspy.Trace):
         else:
             raise ValueError('method must be \'iter\' or \'water\'')
         rftr = cls(rf, header)
-        rftr.stats.sac.b = tshift
-        rftr.stats.sac.user0 = f0
+        rftr.tshift = tshift
+        rftr.f0 = f0
         return rftr
+
+    def write(self, filename, **kwargs):
+        """
+        Write the RF trace to a file.
+
+        :param filename: Output filename
+        :type filename: str
+        :param kwargs: Additional sac header arguments for writing
+        """
+        sac = SACTrace.from_obspy_trace(self)
+        sac.o = 0.0
+        sac.b = -self.tshift
+        sac.user0 = self.f0
+        for key, value in kwargs.items():
+            setattr(sac, key, value)
+        sac.write(filename, **kwargs)
+
         
