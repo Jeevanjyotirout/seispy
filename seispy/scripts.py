@@ -275,6 +275,7 @@ def get_events():
     from obspy import UTCDateTime
     from seispy.io import Query
     parser = argparse.ArgumentParser(description="Get seismic events from IRIS Web-Service")
+    parser.add_argument('-S', help='Server name, defaults to IRIS', metavar='server', default='IRIS')
     parser.add_argument('-b', help='Start time, e.g., 20210101, 20210101020304',
                         metavar='datetime', default=None)
     parser.add_argument('-c', help='Catalog type',
