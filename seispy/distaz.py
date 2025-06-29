@@ -125,7 +125,7 @@ class distaz:
         # dbaz_idx = np.where(dbaz < 0.0)[0]
         dbaz_idx = np.atleast_1d(dbaz < 0.0).nonzero()[0]
         if len(dbaz_idx) != 0:
-            if isinstance(dbaz, (int, float)):
+            if np.isscalar(dbaz):
                 dbaz += 2 * np.pi
             else:
                 dbaz[dbaz_idx] += 2 * np.pi
@@ -145,7 +145,7 @@ class distaz:
         # daz_idx = np.where(daz < 0.0)[0]
         daz_idx = np.atleast_1d(dbaz < 0.0).nonzero()[0]
         if len(daz_idx) != 0:
-            if isinstance(daz, (int, float)):
+            if np.isscalar(daz):
                 daz += 2 * np.pi
             else:
                 daz[daz_idx] += 2 * np.pi
@@ -159,14 +159,14 @@ class distaz:
         # idx = np.where(np.abs(self.baz - 360.) < .00001)[0]
         idx = np.atleast_1d(np.abs(self.baz - 360.) < .00001).nonzero()[0]
         if len(idx) != 0:
-            if isinstance(self.baz, float):
+            if np.isscalar(self.baz):
                 self.baz = 0.0
             else:
                 self.baz[idx] = 0.0
         # idx = np.where(np.abs(self.baz) < .00001)[0]
         idx = np.atleast_1d(np.abs(self.baz) < .00001).nonzero()[0]
         if len(idx) != 0:
-            if isinstance(self.baz, float):
+            if np.isscalar(self.baz):
                 self.baz = 0.0
             else:
                 self.baz[idx] = 0.0
